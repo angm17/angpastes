@@ -16,19 +16,20 @@ Till now you can:
 
 I plan to add new things in the following days/weeks. Simple todo list (It's an unordered list, I will add them as I see fit):
 
-* [ ] Protected pastes (You can add and modify a password, but it's not working yet)
-* [ ] RECaptcha protected pastes
-* [ ] User panel config
-* [ ] Admin panel
-* [ ] Maybe user profiles where others can see your pastes if you have them set as public (Not really a fan of this, but Idk)
-* [ ] Anonymous pastes
-* [ ] User ranks
+	* [ ] Protected pastes (You can add and modify a password, but it's not working yet)
+	* [ ] RECaptcha protected pastes
+	* [ ] User panel config
+	* [ ] Admin panel
+	* [ ] Maybe user profiles where others can see your pastes if you have them set as public (Not really a fan of this, but Idk)
+	* [ ] Anonymous pastes
+	* [ ] User ranks
 
 
+### Instalation and usage:
 
 ```
-npm install
-npm start
+	npm install
+	npm start
 
 ```
 
