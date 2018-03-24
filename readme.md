@@ -1,6 +1,6 @@
 # AngPastes
 
-Very simple project made with express, mongodb and bootstrap 4 (And FontAwesome.js). 
+A very simple project made with express, mongodb for the backend and EJS + bootstrap 4 and FontAwesome.js for the Frontend. 
 
 
 
