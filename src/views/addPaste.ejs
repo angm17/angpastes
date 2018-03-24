@@ -1,0 +1,44 @@
+<% let header = true, footer = true; %>
+<% include partials/head %>
+        <div class="container bg-white cont my-md-2">
+          <div class="card my-md-2">
+            <div class="card-body my-3">
+                <%- messages('message', locals) %>
+                <h1 class="card-title"><i class="fa fa-plus navicon" aria-hidden="true"></i> New Paste</h1>
+                <form action="<% if (locals.edit) {%><%= `/paste/${paste._id}/edit` %><%}else{%>/paste/new<%}%>" method="post">
+                    <div class="form-group">
+                        <input type="text" name="pasteTitle" class="form-control p-3" placeholder="Title" value = "<% if (locals.edit) {%><%= paste.title %><%} %>">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="pasteBody" class="form-control p-3" rows="10" placeholder="Text"><% if (locals.edit) {%><%= paste.body %><%}%></textarea>
+                    </div>
+                    <div class="form-check ml-4">
+                        <input class="form-check-input" type="checkbox" id="passwordCheckbox" name="passwordCheckbox" <% if (locals.edit) { if (paste.password) {%>checked<% }}%>>
+                        <label class="form-check-label" for="passwordCheckbox">
+                            Protect With Password
+                        </label>
+                        <div class="form-group">
+                            <input type="text" id="pastePassword" name="pastePassword" class="form-control p-3 <% if (locals.edit) { if (!paste.password) {%>d-none<% }}%>" placeholder="Password" value = "<% if (locals.edit) {%><%= paste.password %><%} %>">
+                        </div>
+                    </div>
+
+                    <input type="submit" class="btn btn-dark btn-lg btn-block" value="Save Paste">
+                </form>
+                <hr>
+            </div>
+        </div>
+        </div>
+<script>
+    const checkbox = document.getElementById('passwordCheckbox');
+    checkbox.addEventListener('click', ()=>{
+        let password = document.getElementById('pastePassword');
+        if (checkbox.checked == true) {
+            password.classList.remove("d-none");
+        }else{
+            password.classList.add("d-none");
+            password.value = "";
+        }
+    })
+    
+</script>
+<% include partials/footer %>

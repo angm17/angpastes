@@ -1,0 +1,78 @@
+/*
+Author: Miguel Angarita;
+Version: 1.0.0;
+Theme: AngPastes
+*/
+.bg-success, .btn-success {
+  background: #186578 !important; }
+
+.btn-success:hover {
+  background: #10414e !important; }
+
+.text-success, .btn-outline-success {
+  color: #186578 !important; }
+
+.border-success, .btn-outline-success, .btn-success {
+  border-color: #186578 !important; }
+
+.btn-outline-success:hover {
+  background: #186578 !important;
+  color: #fff !important; }
+
+.cont {
+  border: 2px solid; }
+
+.navicon {
+  vertical-align: middle; }
+
+nav .navbar-nav .nav-item {
+  padding-right: 15px;
+  padding-left: 15px; }
+  nav .navbar-nav .nav-item a {
+    color: #fff !important;
+    font-weight: bold; }
+    nav .navbar-nav .nav-item a .active, nav .navbar-nav .nav-item a:hover {
+      color: #00ffe9 !important; }
+
+.brd {
+  border: 1px solid white; }
+
+.brd-black {
+  border: 1px solid black; }
+
+a.link {
+  text-decoration: none; }
+
+a.link-green {
+  color: #186578; }
+
+.form-control:focus {
+  border-color: #186578 !important; }
+
+.post-title-border {
+  border-bottom: 1px solid;
+  padding: 0 10px 10px 10px;
+  border-color: #186578; }
+
+.paste-title{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  max-width: 85%; 
+}
+.pasteOptions{
+  max-width: 8%; 
+}
+footer {
+  text-align: center; }
+  footer a {
+    color: white !important; }
+
+@media screen and (max-width: 991px) {
+  body {
+    font-size: 0.8rem; }
+  .socials {
+    font-size: 0.7rem; }
+  .container {
+    width: 100%;
+    max-width: none; } }

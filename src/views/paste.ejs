@@ -1,0 +1,35 @@
+<% let title = paste.title, header = true, footer = true; %>
+<% include partials/head %>
+        <div class="container card border-success cont mb-md-1">
+          <div class="card-body">
+            <%- messages('message', locals) %>
+          	<% if (user) { if (user.id === paste.author) {%>
+          	<div class="pasteOptions float-right">
+          		<a href="/paste/<%=paste.id%>/edit" class="link link-green" title="Edit"><i class="far fa-edit fa-2x navicon"></i></a>
+          		<form method="POST" class="m-0 p-0" style="display:inline;" name="delete" action="/paste/<%=paste.id%>/delete?_method=DELETE"><a href="#" class="link text-danger" id="delete" title="Delete"><i class="far fa-trash-alt fa-2x navicon"></i></a></form>
+          	</div>
+          	<%}}%>
+            <h5 class="card-title text-success post-title-border paste-title" title="<%= paste.title %>"><%= paste.title %></h5>
+            <div class="card-text text-justify">
+              <% let body = paste.body.split('\n');%>
+              <% if (body.length === 1){ %>
+              <p><%= paste.body %></p>
+              <%}else{ body.forEach(p => {%>
+              <% if(p === "\r") {%><br>
+              <%}else{%>
+              <p><%= p %></p>
+              <%}});}%>
+            </div>
+          </div>
+            <div class="card-footer text-muted">
+                <p class="card-text"><small class="text-muted">Created <%= time(paste.createdAt, "YYYYMMDD").fromNow() %> by <span class="text-success"><%= author %></span> <% if (paste.createdAt.getTime() !== paste.updatedAt.getTime()) {%> (Updated <%= time(paste.updatedAt, "YYYYMMDD").fromNow() %>)</small></p><%}%>
+            </div>
+        </div>
+        <script>
+        	let del = document.getElementById('delete');
+        	del.addEventListener('click', (e) => {
+        		document.forms["delete"].submit();
+        		e.preventDefault();
+        	})
+        </script>
+<% include partials/footer %>

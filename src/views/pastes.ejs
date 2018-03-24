@@ -1,0 +1,33 @@
+<% let header = true, footer = true; %>
+<% include partials/head %>
+        <div class="container bg-white cont my-md-2">
+        	<div class="p-4"><%- messages('message', locals) %></div>
+        	<h1>My Pastes</h1>
+			<% if(pastes.length > 0){ %>
+			<div class="list-group list-group-flush row" id="pastes">
+			<% pastes.forEach(paste => {%>
+				<div class="col-sm-12 list-group-item list-group-item-action">
+					<div class="paste-title"><a href="/paste/<%= paste.id %>" class="mr-auto"><%= paste.title %></a></div>
+					<div class="pasteOptions d-inline float-right">
+						<a href="/paste/<%=paste.id%>/edit" class="link text-success" title="Edit"><i class="far fa-edit fa-2x navicon"></i></a>
+						<form method="POST" style="display:inline;" name="delete" action="/paste/<%=paste.id%>/delete?_method=DELETE"><a href="#" class="link text-danger delete" title="Delete"><i class="far fa-trash-alt fa-2x navicon"></i></a></form>
+					</div>
+				</div>
+			<%})%>
+			</div>
+
+			<%}else{%>
+
+			<p>No pastes to show!</p>
+
+			<%}%>
+        </div>
+<script>
+	document.querySelectorAll('.delete').forEach(item => {
+		item.addEventListener('click', (e)=>{
+			e.preventDefault();
+			item.parentNode.submit();
+		});
+	});
+</script>
+<% include partials/footer %>
