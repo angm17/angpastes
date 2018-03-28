@@ -26,7 +26,8 @@ router.post('/paste/new', ensureAuthenticated,(req, res) => {
 	paste.save((err) => {
 		if (err) {
 			console.log(err);
-			return;
+			req.flash('warning', 'Hmm, something went wrong!')
+			res.redirect('/');
 		}else{
 			req.flash('success', 'Paste created successfully!')
 			res.redirect(`/paste/${paste._id}`);
@@ -40,8 +41,8 @@ router.get('/paste/:id/edit', ensureAuthenticated, (req, res) => {
 	Paste.findById(req.params.id, (err, paste) => {
 		if (err) {
 			console.log(err);
-			req.flash('danger', 'Hmm, you can\'t do that!');
-			res.redirect("/");
+			req.flash('warning', 'Hmm, something went wrong!')
+			res.redirect('/');
 		}
 		if (paste) {
 			if (paste.author === req.user.id) {
@@ -146,19 +147,26 @@ router.delete('/paste/:id/delete', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/paste/:id', (req, res) => {
+	let userid = req.user ? req.user.id : "";
 	Paste.findById(req.params.id, (err, paste) => {
 		if (err) {
 			console.log(err);
-			req.flash('danger', 'Paste does not exist')
-			res.redirect("/");
+			req.flash('warning', 'Hmm, something went wrong!')
+			res.redirect('/');
 		}else{
 			if (paste) {
 				User.findById(paste.author, (err, user) => {
 					if (!err) {
-						res.render('paste', {
-					    	paste,
-					    	author: user.username
-					  	});
+						if (paste.password && paste.author !== userid) {
+							res.render('pastepsw', {
+						    	id: paste.id
+						  	});
+						}else{
+							res.render('paste', {
+						    	paste,
+						    	author: user.username
+						  	});
+						}
 					}
 				})
 			}else{
@@ -169,6 +177,38 @@ router.get('/paste/:id', (req, res) => {
 	});
 	
 });
+
+
+router.post('/paste/:id', (req, res) => {
+	Paste.findById(req.params.id, (err, paste) => {
+		if (err) {
+			console.log(err);
+			req.flash('warning', 'Hmm, something went wrong!')
+			res.redirect('/');
+		}else{
+			if (paste) {
+				User.findById(paste.author, (err, user) => {
+					if (!err) {
+						if (paste.password !== req.body.password) {
+							req.flash('danger', 'Wrong password')
+							res.redirect(`/paste/${req.params.id}`);
+						}else{
+							res.render('paste', {
+						    	paste,
+						    	author: user.username
+						  	});
+						}
+					}
+				})
+			}else{
+				req.flash('danger', 'Paste does not exist')
+				res.redirect("/");
+			}
+		}
+	});
+	
+});
+
 
 function ensureAuthenticated(req, res, next){
   if(req.isAuthenticated()){

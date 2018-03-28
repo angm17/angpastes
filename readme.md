@@ -12,11 +12,11 @@ Till now you can:
 
 * Register new users (It asks for email, but it does not confirm it)
 * Add/edit/delete pastes (Pastes are restricted to 10 000 characters for the body and 100 for the title). Pastes are privated, only the ones who have the url will have access to the paste.
-* You can add and modify a password for your paste, but it's not working yet.
+* You can add and modify a password for your paste~~, but it's not working yet~~.
 
 ## I plan to add new things in the following days/weeks. Simple todo list (It's an unordered list, I will add them as I see fit):
 
-* [ ] Protected pastes (You can add and modify a password, but it's not working yet)
+* [x] ~~Protected pastes (You can add and modify a password, but it's not working yet)~~
 * [ ] RECaptcha protected pastes
 * [ ] User panel config
 * [ ] Admin panel
@@ -27,7 +27,7 @@ Till now you can:
 
 ### Instalation and usage:
 
-```
+```bash
 npm install
 npm start
 
