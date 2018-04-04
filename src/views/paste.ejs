@@ -11,14 +11,7 @@
           	<%}}%>
             <h5 class="card-title text-success post-title-border paste-title" title="<%= paste.title %>"><%= paste.title %></h5>
             <div class="card-text text-justify">
-              <% let body = paste.body.split('\n');%>
-              <% if (body.length === 1){ %>
-              <p><%= paste.body %></p>
-              <%}else{ body.forEach(p => {%>
-              <% if(p === "\r") {%><br>
-              <%}else{%>
-              <p><%= p %></p>
-              <%}});}%>
+              <p class="pasteBody"><%= paste.body %></p>
             </div>
           </div>
             <div class="card-footer text-muted">
