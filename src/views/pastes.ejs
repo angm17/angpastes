@@ -1,10 +1,10 @@
 <% let header = true, footer = true; %>
 <% include partials/head %>
-        <div class="container bg-white cont my-md-2">
+        <div class="container bg-white cont my-md-2" id="pastes">
         	<div class="p-4"><%- messages('message', locals) %></div>
-        	<h1>My Pastes</h1>
+        	<h1 class="pastes-home">My Pastes</h1>
 			<% if(pastes.length > 0){ %>
-			<div class="list-group list-group-flush row" id="pastes">
+			<div class="list-group list-group-flush row">
 			<% pastes.forEach(paste => {%>
 				<div class="col-sm-12 list-group-item list-group-item-action">
 					<div class="paste-title"><a href="/paste/<%= paste.id %>" class="mr-auto"><%= paste.title %></a></div>

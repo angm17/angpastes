@@ -64,6 +64,12 @@ a.link-green {
   max-width: 8%; 
 }
 
+.row .pasteOptions{
+  max-width: 10%;
+  margin: 0;
+  margin-top: -25px; 
+}
+
 p.pasteBody{
   white-space: pre-wrap;
 }
@@ -80,3 +86,19 @@ footer {
   .container {
     width: 100%;
     max-width: none; } }
+
+@media screen and (max-width: 591px){
+  .row .pasteOptions{
+    font-size: 10px;
+    max-width: 40%;
+    margin-top: -20px; 
+  }
+  .paste-title{
+    max-width: 60%;
+    font-size: 12px;
+  }
+  .pastes-home{
+    font-size: 30px;
+  }
+
+}
