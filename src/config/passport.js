@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
   
 module.exports = passport => {
   passport.use(new LocalStrategy({passReqToCallback: true} , (req, username, password, done) => {
-    User.findOne({username:username}, function(err, user){
+    User.findOne({username:username}, (err, user) => {
       if(err) throw err;
       if(!user){
         return done(null, false, req.flash('danger', 'User not found'));

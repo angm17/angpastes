@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
-
+const ensureAuthenticated = require('../config/isAuth');
 
 let Paste = require('../models/paste');
 let User = require('../models/user');
@@ -208,15 +208,5 @@ router.post('/paste/:id', (req, res) => {
 	});
 	
 });
-
-
-function ensureAuthenticated(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-    req.flash('danger', 'Please login first!');
-    req.session.redirectTo = req.url;
-    res.redirect('/login');
-}
 
 module.exports = router;
