@@ -6,7 +6,7 @@ const { check, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
 const ensureAuthenticated = require('../config/isAuth');
 let User = require('../models/user');
-
+let Paste = require('../models/paste');
 router.get('/register', (req, res) => {
   res.render('loginReg', {
   	title:"New Account",
@@ -163,12 +163,80 @@ router.post('/config/password', [
 });
 
 
-router.post('/config/email', ensureAuthenticated, (req, res) => {
-  req.flash('danger', 'This form is not working yet.')
-  res.redirect(`/config`);
+router.post('/config/email', [
+  ensureAuthenticated,
+  check('email')
+  .isEmail().withMessage('Email must be a correct email.'),
+  check('password')
+  .custom((value, { req }) => bcrypt.compareSync(value, req.user.password)).withMessage('Password is incorrect')
+  .custom((value, { req }) => value === req.body.password2).withMessage('Passwords do no match.')
+  ], (req, res) => {
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      errors.array().forEach((err, index) => {
+        req.flash(`danger ${index}`, err.msg);
+      });
+      res.redirect('/config');
+  }else{
+    if (req.body.email === req.user.email) {
+      res.redirect(`/config`);
+    }else{
+      User.findOne({email: new RegExp(`^${req.body.email}$`, "i")}, (err, user) => {
+        if (err){
+          req.flash('danger','An error has ocurred.');
+          req.logout();
+          res.redirect('/login');
+        }else{
+          console.log(user);
+          if (user) {
+            req.flash('danger email','The email address is already in use.');
+            res.redirect('/config');
+          }else{
+            User.update({'_id':req.user.id}, {$set: { 'email': req.body.email} }, err => {
+              if (err) {
+                req.flash('danger error','An error has ocurred.');
+                req.logout();
+                res.redirect('/login');
+              }
+              req.flash('success email', 'Email edited successfully!')
+              res.redirect(`/config`);
+            });
+          }
+        }
+        
+      });
+    }
+  }
 })
-router.post('/config/delete', ensureAuthenticated, (req, res) => {
-  req.flash('danger', 'This form is not working yet.')
-  res.redirect(`/config`);
+router.delete('/config/delete', [
+  ensureAuthenticated,
+  check('password')
+  .custom((value, { req }) => bcrypt.compareSync(value, req.user.password)).withMessage('Password is incorrect')
+  .custom((value, { req }) => value === req.body.password2).withMessage('Passwords do no match.')
+  ], (req, res) => {
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().forEach((err, index) => {
+          req.flash(`danger ${index}`, err.msg);
+        });
+        res.redirect('/config');
+    }else{
+      User.remove({_id: req.user.id}, err => {
+        if(err){
+          console.log(err);
+        }else{
+          Paste.remove({author: req.user.id}, err => {
+            if (err) {
+              throw err;
+            }else{
+              req.flash('danger error','Account and pastes removed from our database');
+              req.logout();
+              res.redirect('/register');
+            }
+          });
+        }
+      });
+    }
+    
 })
 module.exports = router;
