@@ -1,0 +1,72 @@
+<% let header = true, footer = true, title = 'User Config'; %>
+<% include partials/head %>
+        <div class="container bg-white cont my-md-2" id="pastes">
+        	<%- `${messages('message', locals)}` %>
+        	<div class="card my-2">
+        		<div class="card-body">
+					<h1 class="card-title text-center text-success">User Config</h1>
+					<hr>
+					<div class="row my-2">
+						<div class="col-sm-4 my-2">
+							<h4 class="card-title text-center text-success">Edit Password</h4>
+							<form action="/config/password" method="POST">
+								<div class="form-group">
+									<input type="password" name="currentPassword" class="form-control" placeholder="Current Password">
+								</div>
+								<div class="form-group">
+									<input type="password" name="password" class="form-control" placeholder="New Password">
+								</div>
+								<div class="form-group">
+									<input type="password" name="password2" class="form-control" placeholder="Confirm New Password">
+								</div>
+								<input type="submit" class="btn btn-success btn-block" value="Edit Password">
+							</form>
+						</div>
+
+						<div class="col-sm-4 my-2">
+							<hr class="d-sm-none"/>
+							<h4 class="card-title text-center text-success">Edit Email</h4>
+							<form action="/config/email" method="POST">
+								<div class="form-group">
+									<input type="email" name="email" class="form-control" placeholder="Email" value="<%= user.email %>">
+								</div>
+								<div class="form-group">
+									<input type="password" name="password" class="form-control" placeholder="Password">
+								</div>
+								<div class="form-group">
+									<input type="password" name="password2" class="form-control" placeholder="Confirm Password">
+								</div>
+								<input type="submit" class="btn btn-success btn-block" value="Edit Email">
+							</form>
+						</div>
+						<div class="col-sm-4 m-auto my-2">
+							<hr class="d-sm-none"/>
+							<h4 class="card-title text-center text-success">Delete Account</h4>
+							<form action="/config/delete?_method=DELETE" method="POST">
+								<div class="form-group">
+									<input type="password" name="password" class="form-control" placeholder="Password">
+								</div>
+								<div class="form-group">
+									<input type="password" name="password2" class="form-control" placeholder="Confirm Password">
+								</div>
+								<input type="submit" class="btn btn-danger btn-block" value="Delete Account">
+							</form>
+							<small class="text-muted">All your pastes will be removed from our database as well.</small>
+						</div>
+					</div>
+					<div class="row my-2">
+						
+					</div>
+				</div>
+        	</div>
+			
+        </div>
+<script>
+	document.querySelectorAll('.delete').forEach(item => {
+		item.addEventListener('click', (e)=>{
+			e.preventDefault();
+			item.parentNode.submit();
+		});
+	});
+</script>
+<% include partials/footer %>
